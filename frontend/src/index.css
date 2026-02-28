@@ -1,0 +1,538 @@
+:root {
+  /* Premium Anime Boxer Theme Palette */
+  --bg-dark: #0f0c08;
+  --bg-darker: #050403;
+  --primary-accent: #c62828;
+  /* Crimson Boxing Gloves/Text */
+  --primary-glow: rgba(198, 40, 40, 0.4);
+  --secondary-accent: #d87b3e;
+  /* Orange/Skin Tones */
+
+  --text-primary: #f4e4c1;
+  /* Off-white Vintage Cream */
+  --text-secondary: #a89f91;
+
+  --glass-bg: rgba(15, 12, 8, 0.75);
+  --glass-border: rgba(244, 228, 193, 0.08);
+  /* faint cream outline */
+  --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.8);
+
+  /* Status Colors */
+  --status-queued: #a89f91;
+  --status-downloading: #38bdf8;
+  --status-converting: #f59e0b;
+  --status-ready: #10b981;
+  --status-failed: #ef4444;
+
+  /* Typography */
+  --font-main: 'Outfit', sans-serif;
+  --font-display: 'Orbitron', sans-serif;
+  /* HUD elements */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-darker);
+  /* The main fighting arena background with ultra-dark gradient overlay */
+  background-image:
+    linear-gradient(to bottom, rgba(5, 4, 3, 0.65) 0%, rgba(5, 4, 3, 0.95) 100%),
+    url('/bg.jpg');
+  /* The user's uploaded Boxer image */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+
+  /* very slow dramatic breathing zoom/drift */
+  animation: bg-drift 40s ease-in-out infinite alternate;
+}
+
+@keyframes bg-drift {
+  0% {
+    background-position: center;
+    background-size: 100%;
+  }
+
+  100% {
+    background-position: center;
+    background-size: 105%;
+  }
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5), var(--glass-shadow);
+  border-radius: 20px;
+}
+
+.glass-button {
+  background: rgba(244, 228, 193, 0.05);
+  /* very faint cream */
+  border: 1px solid rgba(244, 228, 193, 0.1);
+  color: var(--text-primary);
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.glass-button:hover:not(:disabled) {
+  background: rgba(244, 228, 193, 0.15);
+  border-color: rgba(244, 228, 193, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.glass-button.primary {
+  background: var(--primary-accent);
+  border: 1px solid rgba(255, 100, 100, 0.3);
+  color: #fff;
+}
+
+.glass-button.primary:hover:not(:disabled) {
+  background: #d32f2f;
+  /* lighter red */
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+.glass-button.active {
+  background: var(--primary-accent);
+  border-color: #ff8a80;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 0 10px var(--primary-glow);
+}
+
+.glass-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Beautiful custom range slider (volume & progress) */
+input[type=range] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  background: rgba(244, 228, 193, 0.1);
+  border-radius: 4px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--primary-accent);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -5px;
+  box-shadow: 0 0 10px var(--primary-glow);
+  transition: transform 0.1s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+}
+
+.glass-input {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.glass-input:focus {
+  border-color: var(--primary-accent);
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0 2px rgba(198, 40, 40, 0.2);
+}
+
+/* Animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 15px var(--primary-glow);
+  }
+
+  50% {
+    box-shadow: 0 0 35px rgba(216, 123, 62, 0.5);
+  }
+
+  100% {
+    box-shadow: 0 0 15px var(--primary-glow);
+  }
+}
+
+/* Layout Elements */
+.app-container {
+  display: flex;
+  height: 100vh;
+  padding: 24px;
+  gap: 24px;
+}
+
+.sidebar {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  overflow-y: auto;
+  position: relative;
+  /* for drag overlays */
+}
+
+/* PlaylistItem specific styling */
+.song-card {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  gap: 16px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: grab;
+}
+
+.song-card:active {
+  cursor: grabbing;
+}
+
+.song-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: scale(1.01);
+}
+
+.song-card.playing {
+  background: rgba(198, 40, 40, 0.15);
+  border-color: var(--primary-accent);
+}
+
+.song-card.playing:hover {
+  transform: scale(1.02);
+}
+
+/* Typography Helpers */
+.text-gradient {
+  background: linear-gradient(135deg, var(--text-primary), var(--secondary-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- New Popout Player Styling --- */
+.popout-container {
+  background: #121212;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 30px;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Concentric Rings Artwork Area */
+.artwork-section {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.artwork-image {
+  width: 160px;
+  height: 200px;
+  border-radius: 80px;
+  /* Pill shape */
+  background-size: cover;
+  background-position: center;
+  z-index: 10;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.ring-1 {
+  width: 180px;
+  height: 180px;
+}
+
+.ring-2 {
+  width: 220px;
+  height: 220px;
+}
+
+.ring-3 {
+  width: 260px;
+  height: 260px;
+}
+
+.ring-4 {
+  width: 300px;
+  height: 300px;
+}
+
+/* Song Info */
+.song-info {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.song-info h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.5px;
+}
+
+/* Progress Area */
+.progress-section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.time {
+  font-size: 12px;
+  color: #a0a0a0;
+  font-family: monospace;
+  font-weight: 500;
+  min-width: 40px;
+}
+
+.waveform-container {
+  flex: 1;
+  position: relative;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.waveform-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.waveform-bars {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 24px;
+  pointer-events: none;
+  z-index: 10;
+  /* Use a mask to fill the bars based on the --progress variable */
+  -webkit-mask-image: linear-gradient(to right, #000 var(--progress), rgba(0, 0, 0, 0.2) var(--progress));
+  mask-image: linear-gradient(to right, #000 var(--progress), rgba(0, 0, 0, 0.2) var(--progress));
+}
+
+.wf-bar {
+  flex: 1;
+  margin: 0 1px;
+  background-color: #ff3b5c;
+  /* The red accent for the waveform */
+  border-radius: 1px;
+}
+
+/* Controls Box */
+.popout-controls {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: #a0a0a0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, transform 0.1s;
+  padding: 8px;
+}
+
+.icon-btn.active {
+  color: #ff3b5c;
+}
+
+.icon-btn:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.icon-btn.heart:hover {
+  color: #ff3b5c;
+}
+
+.play-btn-large {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #ff3b5c;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 59, 92, 0.4);
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.play-btn-large:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 59, 92, 0.6);
+}
+
+.play-btn-large:active {
+  transform: scale(0.95);
+}
+
+.center-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+    padding: 12px;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 16px;
+  }
+
+  .main-content,
+  .center-panel {
+    padding: 12px;
+  }
+
+  .song-card {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .song-card>div:first-child {
+    margin: 0 auto;
+  }
+
+  .song-card>div:last-child {
+    justify-content: center;
+  }
+
+  .glass-button {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+
+  .mobile-embedded-player {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    padding: 20px;
+    background: #121212;
+    overflow-y: auto;
+  }
+}
