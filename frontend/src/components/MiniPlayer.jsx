@@ -11,7 +11,7 @@ const MiniPlayer = ({ queue, currentIndex, isPlaying, onStateChange, isPopout, p
     const currentSong = queue[currentIndex];
     // Convert DB audio path to absolute URL point to Fast API backend
     // In a real app the base URL config would be environmental
-    const audioUrl = currentSong ? `http://${window.location.hostname}:8000${currentSong.audio_path}` : '';
+    const audioUrl = currentSong ? `https://rhythmx-ufoe.onrender.com${currentSong.audio_path}` : '';
     const audioRef = useRef(null);
 
     // Offline loading logic via IndexedDB

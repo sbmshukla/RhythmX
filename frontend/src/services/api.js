@@ -1,4 +1,4 @@
-const API_BASE = `http://${window.location.hostname}:8000`;
+const API_BASE = "https://rhythmx-ufoe.onrender.com";
 
 // --- IndexedDB for Offline Audio Storage ---
 const DB_NAME = "SmartPlayerDB";
@@ -45,6 +45,16 @@ const savePlaylists = (playlists) => {
   localStorage.setItem('playlists', JSON.stringify(playlists));
 };
 
+export const generateId = () => {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
+
 export const api = {
   // Offline Storage Exposure
   async saveOfflineAudio(id, fileBlob) {
@@ -63,7 +73,7 @@ export const api = {
   async createPlaylist(name) {
     const playlists = loadPlaylists();
     const newPlaylist = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       name: name,
       created_at: new Date().toISOString()
     };
@@ -99,7 +109,7 @@ export const api = {
   // Backend Interaction with User's Custom API
   async convertVideo(url, playlistId) {
     // 1. Create a dummy queued song immediately for optimistic UI
-    const songId = crypto.randomUUID();
+    const songId = generateId();
     const queuedSong = {
       id: songId,
       playlist_id: playlistId,

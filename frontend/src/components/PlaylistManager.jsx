@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { api } from '../services/api';
+import { api, generateId } from '../services/api';
 
 const PlaylistManager = ({ playlist, onPlay, currentPlayingId }) => {
     const [songs, setSongs] = useState([]);
@@ -37,7 +37,7 @@ const PlaylistManager = ({ playlist, onPlay, currentPlayingId }) => {
 
         setLoading(true);
         try {
-            const songId = crypto.randomUUID();
+            const songId = generateId();
             await api.saveOfflineAudio(songId, file);
 
             const offlineSong = {
@@ -65,7 +65,7 @@ const PlaylistManager = ({ playlist, onPlay, currentPlayingId }) => {
 
     const downloadMP3 = async (song) => {
         try {
-            const API_BASE = `http://${window.location.hostname}:8000`;
+            const API_BASE = "https://rhythmx-ufoe.onrender.com";
             const res = await fetch(`${API_BASE}${song.audio_path}`);
             const blob = await res.blob();
             const url = window.URL.createObjectURL(blob);
