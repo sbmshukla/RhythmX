@@ -43,7 +43,7 @@ def convert_video(data: VideoRequest):
             "outtmpl": os.path.join(DOWNLOAD_DIR, "%(id)s.%(ext)s"),
             "noplaylist": True,
             "quiet": True,
-            "cookiefile": "cookies.txt",   # ⭐ IMPORTANT
+            "cookiefile": os.path.abspath("cookies.txt"),   # ⭐ IMPORTANT
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
