@@ -24,8 +24,8 @@ os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 cookies_data = os.getenv("YT_COOKIES")
 
 if cookies_data:
-    with open("cookies.txt", "w", encoding="utf-8") as f:
-        f.write(cookies_data)
+    with open("cookies.txt", "w", encoding="utf-8", newline="\n") as f:
+        f.write(cookies_data.replace("\\n", "\n"))
 
 
 # ---------- Request Model ----------
