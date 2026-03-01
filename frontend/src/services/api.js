@@ -1,4 +1,4 @@
-const API_BASE = "https://rhythmx-ufoe.onrender.com";
+const API_BASE = "http://127.0.0.1:9000";
 
 // --- IndexedDB for Offline Audio Storage ---
 const DB_NAME = "SmartPlayerDB";
