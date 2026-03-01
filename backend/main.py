@@ -39,7 +39,7 @@ def convert_video(data: VideoRequest):
 
     try:
         ydl_opts = {
-            "format": "bestaudio/best",
+            "format": "best",
             "outtmpl": os.path.join(DOWNLOAD_DIR, "%(id)s.%(ext)s"),
             "noplaylist": True,
             "quiet": True,
