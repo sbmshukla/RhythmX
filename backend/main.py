@@ -7,7 +7,7 @@ import os
 
 app = FastAPI()
 
-# ---------- CORS (allows requests from other devices) ----------
+# ---------- CORS ----------
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,6 +19,13 @@ app.add_middleware(
 # ---------- Download Folder ----------
 DOWNLOAD_DIR = "downloads"
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+
+# ---------- Create cookies file from Render ENV ----------
+cookies_data = os.getenv("YT_COOKIES")
+
+if cookies_data:
+    with open("cookies.txt", "w", encoding="utf-8") as f:
+        f.write(cookies_data)
 
 
 # ---------- Request Model ----------
@@ -35,6 +42,8 @@ def convert_video(data: VideoRequest):
             "format": "bestaudio/best",
             "outtmpl": os.path.join(DOWNLOAD_DIR, "%(id)s.%(ext)s"),
             "noplaylist": True,
+            "quiet": True,
+            "cookiefile": "cookies.txt",   # ⭐ IMPORTANT
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -51,10 +60,10 @@ def convert_video(data: VideoRequest):
         }
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Download failed: {str(e)}")
 
 
-# ---------- Download File Endpoint ----------
+# ---------- Download Endpoint ----------
 @app.get("/download/{filename}")
 def download_file(filename: str):
 
@@ -64,6 +73,7 @@ def download_file(filename: str):
         return FileResponse(file_path, filename=filename)
 
     raise HTTPException(status_code=404, detail="File not found")
+
 
 # ---------- Default Endpoint ----------
 @app.get("/")
