@@ -1,0 +1,32 @@
+# =========================
+# Backend (Python)
+# =========================
+
+# Virtual Environment
+backend/venv/
+venv/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Temp folders and heavy binaries (Optional, but recommended so you don't push massive files to Git)
+backend/ffmpeg_temp/
+backend/ffmpeg.zip
+backend/ffmpeg.exe
+backend/ffprobe.exe
+
+
+# =========================
+# Frontend (Node.js/Vite)
+# =========================
+
+# Dependencies
+frontend/node_modules/
+node_modules/
+
+# Build Output
+frontend/dist/
+dist/
